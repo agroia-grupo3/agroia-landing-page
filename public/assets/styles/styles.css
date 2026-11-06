@@ -1,0 +1,98 @@
+/* AgroIA - estilos de la Landing Page
+   Colores y tipografia tomados del Design System del informe (Inter, verde #1B5E20). */
+
+:root {
+  --primary: #1B5E20;
+  --primary-light: #DDEBDD;
+  --bg: #F4F6F4;
+  --white: #FFFFFF;
+  --ink: #1C1B1F;
+  --muted: #49454F;
+  --line: #E3E7E3;
+  --leve: #1565C0;
+  --leve-bg: #E8F1FB;
+  --mod: #B45309;
+  --mod-bg: #FFF4E8;
+  --crit: #C62828;
+  --crit-bg: #FDECEC;
+  --ok: #2E7D32;
+  --ok-bg: #EFF8F0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--primary); }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 12px; }
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; }
+p { margin: 0 0 12px; }
+
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+.section { padding: 48px 0; }
+.section-white { background: var(--white); }
+.section-green { background: var(--primary-light); }
+.center { text-align: center; }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+.eyebrow { color: var(--primary); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+
+/* ---------- Encabezado ---------- */
+.header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+.header .container { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+.brand img { width: 32px; height: 32px; }
+.nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.nav a { color: var(--ink); text-decoration: none; padding: 10px 12px; border-radius: 8px; font-size: 0.95rem; }
+.nav a:hover { background: var(--primary-light); }
+.nav a.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+.menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 1rem; cursor: pointer; min-height: 48px; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-block; background: var(--primary); color: var(--white); border: 2px solid var(--primary);
+  padding: 12px 20px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none;
+  cursor: pointer; min-height: 48px; font-family: inherit;
+}
+.btn:hover { background: #164d1a; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-outline { background: var(--white); color: var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn-small { padding: 8px 14px; min-height: 40px; font-size: 0.9rem; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+
+/* === inicio (Rol 2) === */
+
+/* === casos-planes (Rol 3) === */
+
+/* === formularios (Rol 4) === */
+
+/* ---------- Pie ---------- */
+.cta { background: var(--primary); color: var(--white); text-align: center; padding: 40px 16px; }
+.cta .btn { background: var(--white); color: var(--primary); border-color: var(--white); }
+.footer { background: #1C1B1F; color: #DDD; padding: 24px 0; font-size: 0.9rem; }
+.footer a { color: #A5D6A7; }
+.footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 800px) {
+  h1 { font-size: 1.7rem; }
+  .hero .container, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .hero img { height: 220px; }
+  .menu-btn { display: block; }
+  .nav { display: none; width: 100%; flex-direction: column; align-items: stretch; }
+  .nav.open { display: flex; }
+  .header .container { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+  .section { padding: 32px 0; }
+}
+
