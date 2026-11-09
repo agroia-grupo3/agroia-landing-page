@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroIA - Formularios</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f7f3;color:#263b30;margin:0;padding:25px}
+main{max-width:650px;margin:auto}
+section{background:white;padding:25px;margin:20px 0;border-radius:12px}
+h1,h2{color:#155e3b}
+label{display:block;margin-top:12px}
+input,select,textarea{width:100%;padding:11px;margin-top:6px;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+button{background:#155e3b;color:white;padding:12px 20px;border:0;border-radius:6px;margin-top:15px;cursor:pointer}
+a{color:#155e3b}
+</style>
+</head>
+<body>
+<main>
+<h1>AgroIA</h1>
+<p>Tecnología inteligente para el cuidado de tus cultivos.</p>
+
+<section>
+<h2>US48 - Solicitar una demostración</h2>
+<form id="demo">
+<label>Nombre completo</label>
+<input name="nombre" required>
+<label>Correo electrónico</label>
+<input type="email" name="correo" required>
+<label>Cooperativa</label>
+<input name="cooperativa" required>
+<label>Tipo de cultivo</label>
+<select name="cultivo" required>
+<option value="">Seleccionar</option>
+<option>Café</option>
+<option>Cacao</option>
+<option>Ambos</option>
+</select>
+<label>Mensaje</label>
+<textarea name="mensaje"></textarea>
+<button type="submit">Solicitar demostración</button>
+<p id="demoMsg" aria-live="polite"></p>
+</form>
+</section>
+
+<section>
+<h2>US49 - Ficha técnica</h2>
+<p>Conoce las características de AgroIA: detección de enfermedades, análisis mediante inteligencia artificial y funcionamiento offline.</p>
+<a href="ficha-tecnica.txt" download>Descargar ficha técnica</a>
+</section>
+
+<section>
+<h2>US51 - Suscripción al boletín</h2>
+<form id="newsletter">
+<label>Correo electrónico</label>
+<input type="email" name="correo" required>
+<button type="submit">Suscribirme</button>
+<p id="newsMsg" aria-live="polite"></p>
+</form>
+</section>
+</main>
+<script>
+document.getElementById('demo').addEventListener('submit',function(e){
+e.preventDefault();
+document.getElementById('demoMsg').textContent='Solicitud registrada correctamente en esta demostración.';
+this.reset();
+});
+document.getElementById('newsletter').addEventListener('submit',function(e){
+e.preventDefault();
+document.getElementById('newsMsg').textContent='Suscripción registrada correctamente en esta demostración.';
+this.reset();
+});
+</script>
+</body>
+</html>
