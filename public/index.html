@@ -127,7 +127,15 @@
       </div>
     </section>
 
-    <!-- SECCION:ficha (Rol 4): ficha tecnica -->
+    <!-- US49: ficha tecnica -->
+    <section class="section">
+      <div class="container">
+        <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+          <div><h3 style="margin:0;">Ficha técnica de AgroIA (PDF)</h3><p class="muted small" style="margin:0;">Características del producto para compartir con tu directiva.</p></div>
+          <a class="btn" href="assets/docs/ficha-tecnica-agroia.pdf" download>Descargar ficha técnica</a>
+        </div>
+      </div>
+    </section>
 
     <!-- US52: preguntas frecuentes -->
     <section class="section section-white" id="preguntas">
@@ -143,7 +151,33 @@
       </div>
     </section>
 
-    <!-- SECCION:demo-boletin (Rol 4): solicitar demostracion y boletin -->
+    <!-- US48: solicitar demo -->
+    <section class="section" id="demo">
+      <div class="container">
+        <h2>Solicita una demostración</h2>
+        <p class="muted">Los campos con * son obligatorios.</p>
+        <form class="form" id="form-demo" novalidate>
+          <div class="field"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" name="nombre" placeholder="Ej.: Carlos Mendoza Ruiz"><div class="error-msg"></div></div>
+          <div class="field"><label for="cooperativa">Cooperativa *</label><input type="text" id="cooperativa" name="cooperativa" placeholder="Nombre de tu cooperativa"><div class="error-msg"></div></div>
+          <div class="field"><label for="correo">Correo electrónico *</label><input type="email" id="correo" name="correo" placeholder="nombre@correo.com"><div class="error-msg"></div></div>
+          <div class="field"><label for="telefono">Teléfono</label><input type="tel" id="telefono" name="telefono" placeholder="9 dígitos"><div class="error-msg"></div></div>
+          <button class="btn" type="submit">Enviar solicitud</button>
+        </form>
+        <div class="success-box" id="demo-ok" role="status">Solicitud enviada. Nuestro equipo te escribirá para coordinar la demostración.</div>
+      </div>
+    </section>
+
+    <!-- US51: boletin -->
+    <section class="section section-white">
+      <div class="container">
+        <h3>Recibe novedades de AgroIA</h3>
+        <form class="form" id="form-news" novalidate>
+          <div class="field"><label for="correo-news">Correo electrónico *</label><input type="email" id="correo-news" name="correo" placeholder="nombre@correo.com"><div class="error-msg"></div></div>
+          <button class="btn btn-outline" type="submit">Suscribirme</button>
+        </form>
+        <div class="success-box" id="news-ok" role="status">¡Listo! Te avisaremos de las novedades.</div>
+      </div>
+    </section>
 
     <section class="cta">
       <h2>¿Quieres ver AgroIA en tu cooperativa?</h2>

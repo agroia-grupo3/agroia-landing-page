@@ -101,6 +101,18 @@ details { background: var(--white); border: 1px solid var(--line); border-radius
 summary { cursor: pointer; font-weight: 600; min-height: 32px; }
 
 /* === formularios (Rol 4) === */
+/* ---------- Formularios ---------- */
+.form { max-width: 520px; }
+.field { margin-bottom: 14px; }
+label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.95rem; }
+input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select, textarea {
+  width: 100%; padding: 12px; border: 1px solid #79747E; border-radius: 8px; font-size: 1rem; font-family: inherit; background: var(--white); min-height: 48px;
+}
+input:focus, select:focus, textarea:focus, button:focus, a:focus, summary:focus { outline: 3px solid #81C784; outline-offset: 2px; }
+.error-msg { color: var(--crit); font-size: 0.875rem; margin-top: 4px; display: none; }
+.field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--crit); border-width: 2px; }
+.field.invalid .error-msg { display: block; }
+.success-box { background: var(--ok-bg); border: 1px solid var(--ok); color: #1B5E20; padding: 16px; border-radius: 8px; display: none; margin-top: 12px; }
 
 /* ---------- Pie ---------- */
 .cta { background: var(--primary); color: var(--white); text-align: center; padding: 40px 16px; }
