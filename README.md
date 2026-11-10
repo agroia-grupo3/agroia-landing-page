@@ -37,10 +37,10 @@ Las 52 historias de usuario del producto tienen su prueba de aceptación en la c
 
 ## Ejecutar en local
 
-Abre `public/index.html` en el navegador, o desde esta carpeta:
+Abre `docs/index.html` en el navegador, o desde esta carpeta:
 
 ```bash
-python -m http.server 8765 --directory public
+python -m http.server 8765 --directory docs
 ```
 
 y entra a http://localhost:8765.
@@ -48,7 +48,7 @@ y entra a http://localhost:8765.
 ## Estructura
 
 ```
-public/
+docs/
   index.html
   favicon.ico
   assets/
