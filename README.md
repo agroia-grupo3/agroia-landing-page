@@ -33,7 +33,11 @@ HTML, CSS y JavaScript básicos, sin frameworks. JavaScript solo valida los form
 | Boletín por correo | US51 |
 | Preguntas frecuentes | US52 |
 
-Las 52 historias de usuario del producto tienen su prueba de aceptación en la carpeta `features/`.
+Las pruebas de aceptación (Gherkin) de las 52 historias de usuario están en el repositorio [agroia-features](https://github.com/agroia-grupo3/agroia-features).
+
+## Sitio publicado
+
+https://agroia-grupo3.github.io/agroia-landing-page/ (GitHub Pages, desplegado desde `public/` con GitHub Actions).
 
 ## Ejecutar en local
 
@@ -56,8 +60,9 @@ public/
     styles/   styles.css
     scripts/  main.js
     docs/     ficha técnica en PDF
-features/     escenarios Gherkin (.feature), uno por historia
-capturas/     capturas de pantalla para el informe
+.github/workflows/  despliegue a GitHub Pages
+CONTRIBUTING.md     ramas y commits
+PROTOTYPE.md        enlaces al prototipo móvil (Figma y videos)
 ```
 
 ## Accesibilidad
@@ -72,4 +77,4 @@ Atributo `alt` en las imágenes, etiquetas semánticas, atributos ARIA en el men
 
 ## Créditos de las fotos
 
-Imágenes de Wikimedia Commons con licencia libre (Scot Nelson, CC0; Smartse, CC BY-SA 3.0); las atribuciones están en el informe y en `equipo/fotos-ep03/FUENTES.md`.
+Imágenes de Wikimedia Commons con licencia libre (Scot Nelson, CC0; Smartse, CC BY-SA 3.0); las atribuciones completas están en el informe del proyecto.
