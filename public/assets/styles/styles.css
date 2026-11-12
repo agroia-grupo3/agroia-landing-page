@@ -2,6 +2,7 @@
    Colores y tipografia tomados del Design System del informe (Inter, verde #1B5E20). */
 
 :root {
+  color-scheme: only light; /* evita que el navegador oscurezca solo los fondos y deje el texto oscuro ilegible */
   --primary: #1B5E20;
   --primary-light: #DDEBDD;
   --bg: #F4F6F4;
