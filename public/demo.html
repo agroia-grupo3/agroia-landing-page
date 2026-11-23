@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <title>Demo interactiva | AgroIA</title>
+  <meta name="description" content="Prueba en el navegador el flujo principal de AgroIA: diagnóstico simulado, historial, alertas, tratamiento y panel de cooperativa.">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles/styles.css">
+  <link rel="stylesheet" href="assets/styles/demo.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a class="brand" href="index.html"><img src="assets/images/logo.png" alt="">AgroIA</a>
+      <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menú</button>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="index.html#como-funciona">Cómo funciona</a>
+        <a href="index.html#planes">Planes</a>
+        <a href="index.html#preguntas">Preguntas</a>
+        <a class="active" href="demo.html" aria-current="page">Demo interactiva</a>
+        <a href="index.html#demo">Solicitar demostración</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero-demo">
+      <div class="container demo-intro">
+        <div>
+          <p class="eyebrow">Demo interactiva</p>
+          <h1>Prueba AgroIA como si estuvieras en la parcela</h1>
+          <p class="muted">Toma una foto de muestra, analízala, guarda el diagnóstico, revisa las alertas y registra el tratamiento. Todo ocurre en tu navegador: el análisis es una <strong>simulación</strong> y los datos se borran al recargar la página.</p>
+        </div>
+        <div class="status-card" aria-live="polite">
+          <p class="small muted">Estado del celular de la demo</p>
+          <button class="switch" id="btn-conexion" type="button" role="switch" aria-checked="false">
+            <span class="switch-dot" aria-hidden="true"></span>
+            <span id="txt-conexion">Sin conexión</span>
+          </button>
+          <p class="small muted" id="txt-cola">Sin envíos pendientes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section demo-app">
+      <div class="container">
+
+        <div class="tabs" role="tablist" aria-label="Módulos de la demostración">
+          <button class="tab" role="tab" id="tab-diagnostico" aria-controls="panel-diagnostico" aria-selected="true">1. Escanear</button>
+          <button class="tab" role="tab" id="tab-historial" aria-controls="panel-historial" aria-selected="false" tabindex="-1">2. Historial</button>
+          <button class="tab" role="tab" id="tab-alertas" aria-controls="panel-alertas" aria-selected="false" tabindex="-1">3. Alertas y mapa</button>
+          <button class="tab" role="tab" id="tab-tratamiento" aria-controls="panel-tratamiento" aria-selected="false" tabindex="-1">4. Tratamiento</button>
+          <button class="tab" role="tab" id="tab-cooperativa" aria-controls="panel-cooperativa" aria-selected="false" tabindex="-1">5. Cooperativa</button>
+        </div>
+
+        <!-- ============ 1. DIAGNÓSTICO (EP01: US01 a US10) ============ -->
+        <div class="panel" role="tabpanel" id="panel-diagnostico" aria-labelledby="tab-diagnostico">
+          <div class="steps" aria-label="Pasos del diagnóstico">
+            <span class="step-chip is-current" data-step="1">1 Cultivo</span>
+            <span class="step-chip" data-step="2">2 Cámara</span>
+            <span class="step-chip" data-step="3">3 Foto</span>
+            <span class="step-chip" data-step="4">4 Análisis</span>
+            <span class="step-chip" data-step="5">5 Resultado</span>
+          </div>
+
+          <div class="grid grid-2 demo-cols">
+            <div>
+              <!-- US02 -->
+              <fieldset class="card fieldset" id="bloque-cultivo">
+                <legend>¿Qué cultivo vas a revisar?</legend>
+                <label class="choice"><input type="radio" name="cultivo" value="cacao" checked> Cacao</label>
+                <label class="choice"><input type="radio" name="cultivo" value="cafe"> Café</label>
+                <p class="small muted">El análisis usa el modelo del cultivo que elijas.</p>
+              </fieldset>
+
+              <!-- US04 -->
+              <div class="card" id="bloque-camara">
+                <h3>Permiso de la cámara</h3>
+                <p class="muted small">AgroIA usa la cámara solo para fotografiar hojas y frutos. La imagen se queda en tu celular.</p>
+                <div class="btn-row">
+                  <button class="btn btn-small" type="button" id="btn-permitir">Permitir cámara</button>
+                  <button class="btn btn-outline btn-small" type="button" id="btn-denegar">Ahora no</button>
+                </div>
+                <p class="small" id="msg-camara" role="status">La cámara aún no está habilitada.</p>
+              </div>
+
+              <!-- US01 y US03 -->
+              <div class="card" id="bloque-foto">
+                <h3>Toma o elige una foto</h3>
+                <p class="muted small">Elige una foto de muestra o sube la tuya. Las muestras 4 y 5 tienen defectos a propósito para ver las indicaciones.</p>
+                <div class="sample-grid" id="muestras" role="group" aria-label="Fotos de muestra"></div>
+                <div class="field">
+                  <label for="archivo-foto">O sube una foto de tu equipo</label>
+                  <input type="file" id="archivo-foto" accept="image/*">
+                </div>
+                <ul class="checklist" id="guia-foto" aria-label="Indicaciones para una buena foto">
+                  <li data-guide="encuadre"><span class="dot"></span>Encuadre: la hoja o la mazorca llena el recuadro.</li>
+                  <li data-guide="enfoque"><span class="dot"></span>Enfoque: la imagen está nítida.</li>
+                  <li data-guide="luz"><span class="dot"></span>Luz: sin sombra fuerte ni brillo directo.</li>
+                </ul>
+                <p class="error-text" id="msg-foto" role="alert"></p>
+              </div>
+            </div>
+
+            <div>
+              <!-- visor + US05 + US06 -->
+              <div class="card viewer-card">
+                <h3>Visor</h3>
+                <div class="viewer" id="visor">
+                  <p class="viewer-empty" id="visor-vacio">Elige una foto para verla aquí.</p>
+                  <img id="visor-img" alt="" hidden>
+                  <div class="bbox" id="bbox" hidden><span class="bbox-label" id="bbox-label"></span></div>
+                </div>
+                <div class="btn-row">
+                  <button class="btn" type="button" id="btn-analizar" disabled>Analizar en el celular</button>
+                  <button class="btn btn-outline" type="button" id="btn-repetir" hidden>Repetir foto</button>
+                </div>
+                <div class="progress" id="progreso" hidden aria-live="polite">
+                  <div class="progress-bar" id="progreso-barra"></div>
+                  <p class="small muted" id="progreso-txt">Analizando…</p>
+                </div>
+                <p class="small muted">Simulación: el resultado depende de la foto elegida. No usa internet.</p>
+              </div>
+
+              <!-- US06, US07, US08, US09, US10 -->
+              <div class="card" id="resultado" hidden aria-live="polite">
+                <h3>Resultado del diagnóstico</h3>
+                <div class="severity" id="sev-chip"></div>
+                <p class="result-title" id="res-plaga"></p>
+                <p class="muted" id="res-detalle"></p>
+
+                <div class="confidence">
+                  <p class="small"><strong id="res-pregunta">¿Qué tan seguro es este resultado?</strong></p>
+                  <div class="meter" role="img" id="meter" aria-label="Confianza"><div class="meter-fill" id="meter-fill"></div></div>
+                  <p class="small" id="res-confianza"></p>
+                </div>
+
+                <div class="field-inline">
+                  <label class="choice"><input type="checkbox" id="chk-gps" checked> Asociar mi ubicación (GPS)</label>
+                  <p class="small muted" id="res-gps"></p>
+                </div>
+
+                <div class="field">
+                  <label for="sel-parcela">Parcela</label>
+                  <select id="sel-parcela">
+                    <option>Parcela 1 · Lote 2</option>
+                    <option>Parcela 2 · Lote 1</option>
+                    <option>Parcela 3 · Lote 4</option>
+                  </select>
+                </div>
+
+                <div class="btn-row">
+                  <button class="btn" type="button" id="btn-guardar">Guardar en el historial</button>
+                  <button class="btn btn-outline" type="button" id="btn-ver-tratamiento">¿Qué hacer ahora?</button>
+                  <button class="btn btn-outline" type="button" id="btn-escuchar">Escuchar</button>
+                </div>
+                <p class="success-inline" id="msg-guardado" role="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 2. HISTORIAL (EP02: US11 a US19) ============ -->
+        <div class="panel" role="tabpanel" id="panel-historial" aria-labelledby="tab-historial" hidden>
+          <div class="card">
+            <h3>Filtrar inspecciones</h3>
+            <div class="filters">
+              <div class="field"><label for="f-parcela">Parcela</label>
+                <select id="f-parcela"><option value="">Todas</option><option>Parcela 1 · Lote 2</option><option>Parcela 2 · Lote 1</option><option>Parcela 3 · Lote 4</option></select></div>
+              <div class="field"><label for="f-cultivo">Cultivo</label>
+                <select id="f-cultivo"><option value="">Todas</option><option value="cacao">Cacao</option><option value="cafe">Café</option></select></div>
+              <div class="field"><label for="f-plaga">Patología</label>
+                <select id="f-plaga"><option value="">Todas</option><option>Moniliasis</option><option>Mazorca negra</option><option>Roya del café</option></select></div>
+              <div class="field"><label for="f-orden">Orden</label>
+                <select id="f-orden"><option value="desc">Más recientes primero</option><option value="asc">Más antiguas primero</option></select></div>
+            </div>
+          </div>
+
+          <div class="grid grid-2 demo-cols">
+            <div>
+              <ul class="record-list" id="lista-historial" aria-label="Inspecciones guardadas"></ul>
+              <p class="muted" id="historial-vacio">Aún no hay inspecciones. Haz un diagnóstico y guárdalo.</p>
+            </div>
+            <div class="card" id="detalle-inspeccion">
+              <h3>Detalle de la inspección</h3>
+              <p class="muted small" id="detalle-vacio">Elige una inspección de la lista para ver su imagen y sus datos.</p>
+              <div id="detalle-contenido" hidden>
+                <img id="det-img" alt="" class="det-img">
+                <dl class="dl" id="det-datos"></dl>
+
+                <div class="field">
+                  <label for="det-notas">Notas de la inspección</label>
+                  <textarea id="det-notas" rows="3"></textarea>
+                  <p class="small muted" id="det-nota-ayuda"></p>
+                </div>
+                <button class="btn btn-small" type="button" id="btn-guardar-nota">Guardar nota</button>
+
+                <h4>Acciones de control</h4>
+                <ul class="plain-list" id="det-acciones"></ul>
+                <div class="field">
+                  <label for="accion-texto">Acción aplicada</label>
+                  <input type="text" id="accion-texto" placeholder="Ej.: Retiré las mazorcas enfermas">
+                  <div class="error-msg" id="accion-error"></div>
+                </div>
+                <button class="btn btn-outline btn-small" type="button" id="btn-registrar-accion">Registrar acción</button>
+              </div>
+              <div class="sync-box">
+                <p class="small"><strong>Sincronización</strong></p>
+                <p class="small muted" id="sync-estado">Sin expedientes pendientes.</p>
+                <button class="btn btn-small" type="button" id="btn-sincronizar">Sincronizar ahora</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 3. ALERTAS Y MAPA (EP03: US15, US20 a US27) ============ -->
+        <div class="panel" role="tabpanel" id="panel-alertas" aria-labelledby="tab-alertas" hidden>
+          <div class="grid grid-2 demo-cols">
+            <div>
+              <div class="card">
+                <h3>Cuándo avisar</h3>
+                <p class="muted small">Tu cooperativa y tu técnico reciben un aviso cuando un diagnóstico llega a este nivel o a uno mayor.</p>
+                <div class="field">
+                  <label for="umbral-sev">Severidad mínima</label>
+                  <select id="umbral-sev">
+                    <option value="1">Leve</option>
+                    <option value="2" selected>Moderada</option>
+                    <option value="3">Crítica</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="umbral-conf">Confianza mínima: <span id="umbral-conf-val">60</span> %</label>
+                  <input type="range" id="umbral-conf" min="40" max="95" value="60" step="5">
+                </div>
+                <p class="small success-inline" id="msg-umbral" role="status"></p>
+              </div>
+
+              <div class="card">
+                <div class="list-head">
+                  <h3>Alertas</h3>
+                  <div class="field-inline">
+                    <label for="alertas-orden" class="small">Ordenar</label>
+                    <select id="alertas-orden"><option value="riesgo">Por riesgo</option><option value="fecha">Por fecha</option></select>
+                  </div>
+                </div>
+                <ul class="record-list" id="lista-alertas" aria-label="Alertas activas"></ul>
+                <p class="muted" id="alertas-vacio">No hay alertas. Guarda un diagnóstico que supere el umbral.</p>
+              </div>
+            </div>
+
+            <div>
+              <div class="card" id="detalle-alerta">
+                <h3>Detalle de la alerta</h3>
+                <p class="muted small" id="alerta-vacia">Elige una alerta para ver su detalle.</p>
+                <dl class="dl" id="alerta-datos" hidden></dl>
+                <div id="alerta-acciones" hidden>
+                  <div class="field">
+                    <label for="reinspeccion-fecha">Reinspección programada</label>
+                    <input type="date" id="reinspeccion-fecha">
+                    <div class="error-msg" id="reinspeccion-error"></div>
+                  </div>
+                  <button class="btn btn-small" type="button" id="btn-programar">Programar reinspección</button>
+                  <p class="success-inline small" id="msg-reinspeccion" role="status"></p>
+                  <h4>Evolución del foco</h4>
+                  <div class="evolution" id="evolucion" aria-label="Evolución de la incidencia"></div>
+                  <p class="small" id="evolucion-txt"></p>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Mapa de la parcela</h3>
+                <div class="map-tools">
+                  <label class="choice"><input type="radio" name="mapa-modo" value="pines" checked> Focos</label>
+                  <label class="choice"><input type="radio" name="mapa-modo" value="calor"> Mapa de calor</label>
+                </div>
+                <div class="plot-map" id="mapa" role="img" aria-label="Mapa de la parcela con los focos detectados"></div>
+                <p class="small muted" id="mapa-leyenda">Cada pin es una inspección con coordenadas. Pulsa un pin para ver su alerta.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 4. TRATAMIENTO (EP04: US28 a US36) ============ -->
+        <div class="panel" role="tabpanel" id="panel-tratamiento" aria-labelledby="tab-tratamiento" hidden>
+          <div class="grid grid-2 demo-cols">
+            <div class="card">
+              <h3>Tratamiento recomendado</h3>
+              <div class="field">
+                <label for="trat-inspeccion">Diagnóstico</label>
+                <select id="trat-inspeccion"></select>
+              </div>
+              <p class="muted small" id="trat-vacio">Guarda un diagnóstico para ver su tratamiento.</p>
+              <div id="trat-contenido" hidden>
+                <div class="severity" id="trat-sev"></div>
+                <p class="result-title" id="trat-plaga"></p>
+                <p id="trat-prioridad" class="priority"></p>
+                <h4>Recomendación</h4>
+                <p id="trat-recomendacion"></p>
+                <div id="trat-mip" class="note-box" hidden></div>
+                <h4>Guía paso a paso</h4>
+                <ol class="steps-list" id="trat-pasos"></ol>
+                <h4>Dosificación y equipo de protección</h4>
+                <ul class="plain-list" id="trat-dosis"></ul>
+                <div class="warning-box" role="note">
+                  <strong>Advertencias de seguridad</strong>
+                  <ul class="plain-list" id="trat-advertencias"></ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" id="trat-registro" hidden>
+              <h3>Registrar la acción</h3>
+              <div class="field">
+                <label for="trat-accion">¿Qué hiciste?</label>
+                <textarea id="trat-accion" rows="3" placeholder="Ej.: Apliqué el fungicida en las plantas del borde"></textarea>
+                <div class="error-msg" id="trat-accion-error"></div>
+              </div>
+              <div class="btn-row">
+                <button class="btn" type="button" id="btn-trat-guardar">Registrar acción</button>
+                <button class="btn btn-outline" type="button" id="btn-trat-pendiente">Marcar como pendiente</button>
+              </div>
+              <p class="success-inline" id="trat-msg" role="status"></p>
+
+              <h4>Estado del tratamiento</h4>
+              <ul class="plain-list" id="trat-estados"></ul>
+
+              <div class="support-box">
+                <h4>¿Necesitas apoyo técnico?</h4>
+                <p class="small muted" id="trat-apoyo-ayuda">Si el caso es crítico o no estás seguro, pide orientación antes de aplicar.</p>
+                <button class="btn btn-outline btn-small" type="button" id="btn-apoyo">Solicitar apoyo técnico</button>
+                <div class="chat" id="chat" hidden>
+                  <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
+                  <form class="chat-form" id="chat-form" novalidate>
+                    <label for="chat-texto" class="sr-only">Mensaje para el técnico</label>
+                    <input type="text" id="chat-texto" placeholder="Escribe tu mensaje">
+                    <button class="btn btn-small" type="submit">Enviar</button>
+                  </form>
+                  <p class="small muted">Chat simulado en memoria: se borra al recargar.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 5. COOPERATIVA (EP05: US37, US40, US41, US44) ============ -->
+        <div class="panel" role="tabpanel" id="panel-cooperativa" aria-labelledby="tab-cooperativa" hidden>
+          <div class="kpis" id="kpis" aria-label="Indicadores de la cooperativa"></div>
+          <div class="card">
+            <h3>Reporte consolidado</h3>
+            <div class="filters">
+              <div class="field"><label for="r-campana">Campaña</label>
+                <select id="r-campana"><option value="">Todas</option><option>2026</option><option>2025</option></select></div>
+              <div class="field"><label for="r-cultivo">Cultivo</label>
+                <select id="r-cultivo"><option value="">Todas</option><option value="cacao">Cacao</option><option value="cafe">Café</option></select></div>
+              <div class="field"><label for="r-plaga">Plaga</label>
+                <select id="r-plaga"><option value="">Todas</option><option>Moniliasis</option><option>Mazorca negra</option><option>Roya del café</option></select></div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="tabla-socios">
+                <caption class="sr-only">Socios de la cooperativa y su estado fitosanitario</caption>
+                <thead><tr><th scope="col">Socio</th><th scope="col">Cultivo</th><th scope="col">Campaña</th><th scope="col">Plaga principal</th><th scope="col">Casos</th><th scope="col">Estado</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="btn-row">
+              <button class="btn" type="button" id="btn-exportar">Exportar reporte (CSV)</button>
+              <span class="small success-inline" id="msg-exportar" role="status"></span>
+            </div>
+          </div>
+          <div class="card" id="socio-detalle" hidden>
+            <h3 id="socio-nombre"></h3>
+            <p class="muted small" id="socio-resumen"></p>
+            <ul class="plain-list" id="socio-parcelas"></ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>¿Quieres ver AgroIA en tu cooperativa?</h2>
+      <a class="btn" href="index.html#demo">Solicitar demostración</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>AgroIA</strong> · Sistema móvil offline-first para café y cacao<br>
+        u201914295@upc.edu.pe
+      </div>
+      <div>
+        Demo simulada: los datos son de ejemplo y no se envían a ningún servidor.<br>
+        © 2026 AgroIA · UPC · IHC y Tecnologías Móviles
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/scripts/main.js"></script>
+  <script src="assets/scripts/demo.js"></script>
+</body>
+</html>
