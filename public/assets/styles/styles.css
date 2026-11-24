@@ -69,7 +69,7 @@ p { margin: 0 0 12px; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-outline { background: var(--white); color: var(--primary); }
 .btn-outline:hover { background: var(--primary-light); }
-.btn-small { padding: 8px 14px; min-height: 40px; font-size: 0.9rem; }
+.btn-small { padding: 10px 16px; min-height: 48px; font-size: 0.9rem; }
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
 
 /* === inicio (Rol 2) === */
